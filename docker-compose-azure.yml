@@ -1,0 +1,72 @@
+version: '3'
+services:
+  web:
+    image: botiumcontainerregistry.azurecr.io/botium-box-server:latest
+    ports:
+     - "4000:4000"
+    environment:
+      LICENSE_KEY: add your license key here
+      PRISMA_ENDPOINT: http://prisma:4466/box/prod
+      BOTIUMBOX_QUEUE_REDISURL: redis://redis:6379
+      BOTIUMBOX_ENABLE_CONNECTORS: fbdirect,webspeech
+      ZAP_ENDPOINT: http://zap:8080
+      DEBUG: botium*
+      #HTTP_PROXY: https://xxx
+      #HTTPS_PROXY: https://xxx
+      #NO_PROXY: redis,prisma
+      #NODE_TLS_REJECT_UNAUTHORIZED: 0 
+    depends_on:
+      - redis
+      - prisma
+    restart: always
+    volumes:
+      - "${WEBAPP_STORAGE_HOME}/testsets:/app/server/testsets"
+      - "${WEBAPP_STORAGE_HOME}/resources:/app/server/resources"
+      - "${WEBAPP_STORAGE_HOME}/botiumwork:/app/server/botiumwork"
+  agent:
+    image: botiumcontainerregistry.azurecr.io/botium-box-agent:latest
+    environment:
+      BOTIUMBOX_AGENT_NAME: Botium Agent
+      BOTIUMBOX_QUEUE_REDISURL: redis://redis:6379
+      DEBUG: botium*
+      #HTTP_PROXY: https://xxx
+      #HTTPS_PROXY: https://xxx
+      #NO_PROXY: redis,prisma
+      #NODE_TLS_REJECT_UNAUTHORIZED: 0  
+    depends_on:
+      - web
+      - redis
+    restart: always
+    volumes:
+      - "${WEBAPP_STORAGE_HOME}/testsets:/app/agent/testsets"
+      - "${WEBAPP_STORAGE_HOME}/resources:/app/agent/resources"
+      - "${WEBAPP_STORAGE_HOME}/botiumwork:/app/agent/botiumwork"
+  prisma:
+    image: botiumcontainerregistry.azurecr.io/prisma:1.25.4
+    restart: always
+    environment:
+      PRISMA_CONFIG: |
+        port: 4466
+        databases:
+          default:
+            connector: mysql
+            host: mysql
+            port: 3306
+            user: root
+            password: prisma
+            migrations: true
+            ssl: true
+  redis:
+    image: botiumcontainerregistry.azurecr.io/redis:alpine
+    restart: always
+  zaproxy:
+    container_name: zap
+    image: owasp/zap2docker-stable:2.7.0
+    command: [
+      "zap.sh",
+      "-daemon",
+      "-host", "0.0.0.0", "-port", "8080",
+      "-config", "api.disablekey=true",
+      "-config", "api.addrs.addr.name=.*",
+      "-config", "api.addrs.addr.regex=true"
+    ]
