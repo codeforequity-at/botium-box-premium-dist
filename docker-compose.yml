@@ -1,0 +1,78 @@
+version: '3'
+services:
+  web:
+    image: 687577257180.dkr.ecr.eu-west-1.amazonaws.com/botium/botium-box-server:latest
+    ports:
+     - "4000:80"
+    env_file:
+     - ./docker-compose-box.env
+    depends_on:
+      - redis
+      - prisma
+    restart: always
+    volumes:
+      - "${TESTSETDIR}:/app/server/testsets"
+      - "${RESOURCESDIR}:/app/server/resources"
+      - "${BOTIUM_TEMPDIR}:/app/server/botiumwork"
+  agent:
+    image: 687577257180.dkr.ecr.eu-west-1.amazonaws.com/botium/botium-box-agent:latest
+    environment:
+      BOTIUMBOX_AGENT_NAME: Botium Agent
+    env_file:
+     - ./docker-compose-box.env     
+    depends_on:
+      - web
+      - redis
+    restart: always
+    volumes:
+      - "${TESTSETDIR}:/app/agent/testsets"
+      - "${RESOURCESDIR}:/app/agent/resources"
+      - "${BOTIUM_TEMPDIR}:/app/agent/botiumwork"
+  prisma:
+    image: prismagraphql/prisma:1.25.4
+    depends_on:
+      - mysql
+    restart: always
+    environment:
+      PRISMA_CONFIG: |
+        port: 4466
+        databases:
+          default:
+            connector: mysql
+            host: mysql
+            port: 3306
+            user: root
+            password: prisma
+            migrations: true
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: prisma
+    volumes:
+      - "${MYSQLDIR}:/var/lib/mysql"      
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    depends_on:
+      - mysql
+    restart: always
+    links:
+      - mysql:db
+    environment:
+      MYSQL_ROOT_PASSWORD: prisma
+    ports:
+      - "4001:80"  
+  redis:
+    image: redis:alpine
+    restart: always
+  zaproxy:
+    container_name: zap
+    image: owasp/zap2docker-stable:2.7.0
+    command: [
+      "zap.sh",
+      "-daemon",
+      "-host", "0.0.0.0", "-port", "8080",
+      "-config", "api.disablekey=true",
+      "-config", "api.addrs.addr.name=.*",
+      "-config", "api.addrs.addr.regex=true"
+    ]

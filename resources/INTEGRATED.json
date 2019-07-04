@@ -1,0 +1,11 @@
+[
+    {
+        "name": "PhantomJS Virtual Browser",
+        "value": {
+            "type": "DESKTOP",
+            "capabilities": {
+                "browserName": "phantomjs"
+            }
+        }
+    }  
+]

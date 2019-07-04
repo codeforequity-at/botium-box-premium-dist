@@ -1,0 +1,20 @@
+[
+    {
+        "name": "Google Chrome",
+        "value": {
+            "type": "DESKTOP",
+            "capabilities": {
+                "browserName": "chrome"
+            }
+        }
+    },
+    {
+        "name": "Mozilla Firefox",
+        "value": {
+            "type": "DESKTOP",
+            "capabilities": {
+                "browserName": "firefox"
+            }
+        }
+    }
+]

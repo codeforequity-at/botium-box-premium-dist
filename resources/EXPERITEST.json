@@ -1,0 +1,32 @@
+[
+    {
+        "name": "Google Chrome, Windows 10",
+        "value": {
+            "type": "DESKTOP",
+            "capabilities": {
+                "browserName": "chrome",
+                "platform": "WIN10"
+            }
+        }
+    },
+    {
+        "name": "Firefox, Windows 10",
+        "value": {
+            "type": "DESKTOP",
+            "capabilities": {
+                "browserName": "firefox",
+                "platform": "WIN10"
+            }
+        }
+    },
+    {
+        "name": "Edge, Windows 10",
+        "value": {
+            "type": "DESKTOP",
+            "capabilities": {
+                "browserName": "MicrosoftEdge",
+                "platform": "WIN10"
+            }
+        }
+    }
+]
