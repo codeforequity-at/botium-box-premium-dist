@@ -49,9 +49,7 @@ services:
       - redis
     restart: always
     volumes:
-      - "./testsets:/app/server/testsets"
-      - "./resources:/app/server/resources"
-      - "./botiumwork:/app/server/botiumwork"
+      - "./botiumwork:/app/agent/botiumwork"
   prisma:
     image: prismagraphql/prisma:1.25.4
     depends_on:
