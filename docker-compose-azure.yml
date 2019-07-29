@@ -1,7 +1,7 @@
 version: '3'
 services:
   web:
-    image: botiumcontainerregistry.azurecr.io/botium-box-server:${BOX_VERSION}
+    image: botiumcontainerregistry.azurecr.io/botium-box-server:1.7.4
     ports:
      - "4000:4000"
     environment:
@@ -26,7 +26,7 @@ services:
       - "${WEBAPP_STORAGE_HOME}/resources:/app/server/resources"
       - "${WEBAPP_STORAGE_HOME}/botiumwork:/app/server/botiumwork"
   agent:
-    image: botiumcontainerregistry.azurecr.io/botium-box-agent:${BOX_VERSION}
+    image: botiumcontainerregistry.azurecr.io/botium-box-agent:1.7.4
     environment:
       BOTIUMBOX_AGENT_NAME: Botium Agent
       BOTIUMBOX_QUEUE_REDISURL: redis://redis:6379
