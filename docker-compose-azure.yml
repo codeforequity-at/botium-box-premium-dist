@@ -1,7 +1,7 @@
 version: '3'
 services:
   web:
-    image: botiumcontainerregistry.azurecr.io/botium-box-server:latest
+    image: botiumcontainerregistry.azurecr.io/botium-box-server:1.7.4
     ports:
      - "4000:4000"
     environment:
@@ -14,17 +14,19 @@ services:
       #HTTP_PROXY: https://xxx
       #HTTPS_PROXY: https://xxx
       #NO_PROXY: redis,prisma
-      #NODE_TLS_REJECT_UNAUTHORIZED: 0 
+      #NODE_TLS_REJECT_UNAUTHORIZED: 0
     depends_on:
       - redis
       - prisma
     restart: always
+    networks:
+      - botiumBox
     volumes:
       - "${WEBAPP_STORAGE_HOME}/testsets:/app/server/testsets"
       - "${WEBAPP_STORAGE_HOME}/resources:/app/server/resources"
       - "${WEBAPP_STORAGE_HOME}/botiumwork:/app/server/botiumwork"
   agent:
-    image: botiumcontainerregistry.azurecr.io/botium-box-agent:latest
+    image: botiumcontainerregistry.azurecr.io/botium-box-agent:1.7.4
     environment:
       BOTIUMBOX_AGENT_NAME: Botium Agent
       BOTIUMBOX_QUEUE_REDISURL: redis://redis:6379
@@ -32,11 +34,13 @@ services:
       #HTTP_PROXY: https://xxx
       #HTTPS_PROXY: https://xxx
       #NO_PROXY: redis,prisma
-      #NODE_TLS_REJECT_UNAUTHORIZED: 0  
+      #NODE_TLS_REJECT_UNAUTHORIZED: 0
     depends_on:
       - web
       - redis
     restart: always
+    networks:
+      - botiumBox
     volumes:
       - "${WEBAPP_STORAGE_HOME}/botiumwork:/app/agent/botiumwork"
   prisma:
@@ -54,9 +58,13 @@ services:
             password: prisma
             migrations: true
             ssl: true
+    networks:
+      - botiumBox
   redis:
     image: botiumcontainerregistry.azurecr.io/redis:alpine
     restart: always
+    networks:
+      - botiumBox
   zaproxy:
     container_name: zap
     image: owasp/zap2docker-stable:2.7.0
@@ -68,3 +76,7 @@ services:
       "-config", "api.addrs.addr.name=.*",
       "-config", "api.addrs.addr.regex=true"
     ]
+    networks:
+      - botiumBox
+networks:
+  botiumBox:
