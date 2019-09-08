@@ -11,6 +11,7 @@ services:
       BOTIUMBOX_ENABLE_CONNECTORS: fbdirect,webspeech
       ZAP_ENDPOINT: http://zap:8080
       DEBUG: botium*
+      TESTSETDIR_PUBLIC: ./testsets
       #HTTP_PROXY: https://xxx
       #HTTPS_PROXY: https://xxx
       #NO_PROXY: redis,prisma
@@ -42,6 +43,7 @@ services:
     networks:
       - botiumBox
     volumes:
+      - "${WEBAPP_STORAGE_HOME}/testsets:/app/agent/testsets"
       - "${WEBAPP_STORAGE_HOME}/botiumwork:/app/agent/botiumwork"
   prisma:
     image: botiumcontainerregistry.azurecr.io/prisma:1.25.4
