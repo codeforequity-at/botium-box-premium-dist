@@ -53,7 +53,7 @@ services:
       - redis
     restart: always
     volumes:
-      - "./testsets:/app/server/testsets"
+      - "./testsets:/app/agent/testsets"
       - "./botiumwork:/app/agent/botiumwork"
     networks:
       - botiumBox
