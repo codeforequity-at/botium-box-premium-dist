@@ -67,8 +67,7 @@ services:
     restart: always
     networks:
       - botiumBox
-  zaproxy:
-    container_name: zap
+  zap:
     image: owasp/zap2docker-stable:2.7.0
     command: [
       "zap.sh",

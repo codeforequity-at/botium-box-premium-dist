@@ -101,8 +101,7 @@ services:
     restart: always
     networks:
       - botiumBox
-  zaproxy:
-    container_name: zap
+  zap:
     image: owasp/zap2docker-stable:2.7.0
     command: [
       "zap.sh",
@@ -115,7 +114,6 @@ services:
     networks:
       - botiumBox
   elasticsearch:
-    container_name: elasticsearch
     image: botium/elasticsearch:${BOX_VERSION}
     restart: always
     volumes:
@@ -127,7 +125,6 @@ services:
     networks:
       - botiumBox
   logstash:
-    container_name: logstash
     restart: always
     image: botium/logstash:${BOX_VERSION}
     environment:
@@ -137,7 +134,6 @@ services:
     networks:
       - botiumBox
   kibana:
-    container_name: kibana
     restart: always
     image: botium/kibana:${BOX_VERSION}
     ports:
@@ -149,7 +145,6 @@ services:
     networks:
       - botiumBox
   logspout:
-    container_name: logspout
     restart: always
     image: gliderlabs/logspout:v3
     command: 'syslog://logstash:5000'
