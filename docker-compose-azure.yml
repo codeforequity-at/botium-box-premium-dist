@@ -1,7 +1,7 @@
 version: '3'
 services:
   web:
-    image: botiumcontainerregistry.azurecr.io/botium-box-server:1.7.5
+    image: botium/botium-box-server:1.7.5
     ports:
      - "4000:4000"
     environment:
@@ -27,7 +27,7 @@ services:
       - "${WEBAPP_STORAGE_HOME}/resources:/app/server/resources"
       - "${WEBAPP_STORAGE_HOME}/botiumwork:/app/server/botiumwork"
   agent:
-    image: botiumcontainerregistry.azurecr.io/botium-box-agent:1.7.5
+    image: botium/botium-box-agent:1.7.5
     environment:
       BOTIUMBOX_AGENT_NAME: Botium Agent
       BOTIUMBOX_QUEUE_REDISURL: redis://redis:6379
@@ -46,7 +46,7 @@ services:
       - "${WEBAPP_STORAGE_HOME}/testsets:/app/agent/testsets"
       - "${WEBAPP_STORAGE_HOME}/botiumwork:/app/agent/botiumwork"
   prisma:
-    image: botiumcontainerregistry.azurecr.io/prisma:1.25.4
+    image: prisma:1.25.4
     restart: always
     environment:
       PRISMA_CONFIG: |
@@ -63,7 +63,7 @@ services:
     networks:
       - botiumBox
   redis:
-    image: botiumcontainerregistry.azurecr.io/redis:alpine
+    image: redis:alpine
     restart: always
     networks:
       - botiumBox
