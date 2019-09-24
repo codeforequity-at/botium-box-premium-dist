@@ -44,6 +44,7 @@ services:
       - botiumBox
     volumes:
       - "${WEBAPP_STORAGE_HOME}/testsets:/app/agent/testsets"
+      - "${WEBAPP_STORAGE_HOME}/resources:/app/agent/resources"
       - "${WEBAPP_STORAGE_HOME}/botiumwork:/app/agent/botiumwork"
   prisma:
     image: prisma:1.25.4
