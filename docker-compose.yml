@@ -14,16 +14,17 @@ services:
     networks:
       - botiumBox
   web:
-    image: 687577257180.dkr.ecr.eu-west-1.amazonaws.com/botium/botium-box-server:${BOX_VERSION}
+    image: botium/botium-box-server:${BOX_VERSION}
     ports:
      - "4000:4000"
     environment:
-      LICENSE_KEY: add your license key here
+      # LICENSE_KEY: # add your license key here or in the resources/license.key file
       PRISMA_ENDPOINT: http://prisma:4466/box/prod
       BOTIUMBOX_QUEUE_REDISURL: redis://redis:6379
       BOTIUMBOX_ENABLE_CONNECTORS: fbdirect,webspeech
       ZAP_ENDPOINT: http://zap:8080
       DEBUG: botium*
+      TESTSETDIR_PUBLIC: ./testsets
       #HTTP_PROXY: https://xxx
       #HTTPS_PROXY: https://xxx
       #NO_PROXY: redis,prisma
@@ -39,7 +40,7 @@ services:
     networks:
       - botiumBox
   agent:
-    image: 687577257180.dkr.ecr.eu-west-1.amazonaws.com/botium/botium-box-agent:${BOX_VERSION}
+    image: botium/botium-box-agent:${BOX_VERSION}
     environment:
       BOTIUMBOX_AGENT_NAME: Botium Agent
       BOTIUMBOX_QUEUE_REDISURL: redis://redis:6379
@@ -54,6 +55,7 @@ services:
     restart: always
     volumes:
       - "./testsets:/app/agent/testsets"
+      - "./resources:/app/agent/resources"
       - "./botiumwork:/app/agent/botiumwork"
     networks:
       - botiumBox
@@ -102,8 +104,7 @@ services:
     restart: always
     networks:
       - botiumBox
-  zaproxy:
-    container_name: zap
+  zap:
     image: owasp/zap2docker-stable:2.7.0
     command: [
       "zap.sh",
