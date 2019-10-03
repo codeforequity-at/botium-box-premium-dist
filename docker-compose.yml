@@ -18,7 +18,7 @@ services:
     ports:
      - "4000:4000"
     environment:
-      LICENSE_KEY: # add your license key here
+      # LICENSE_KEY: # add your license key here or in the resources/license.key file
       PRISMA_ENDPOINT: http://prisma:4466/box/prod
       BOTIUMBOX_QUEUE_REDISURL: redis://redis:6379
       BOTIUMBOX_ENABLE_CONNECTORS: fbdirect,webspeech

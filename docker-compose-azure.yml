@@ -1,7 +1,7 @@
 version: '3'
 services:
   web:
-    image: botium/botium-box-server:1.7.5
+    image: botium/botium-box-server:1.8.0
     ports:
      - "4000:4000"
     environment:
@@ -27,7 +27,7 @@ services:
       - "${WEBAPP_STORAGE_HOME}/resources:/app/server/resources"
       - "${WEBAPP_STORAGE_HOME}/botiumwork:/app/server/botiumwork"
   agent:
-    image: botium/botium-box-agent:1.7.5
+    image: botium/botium-box-agent:1.8.0
     environment:
       BOTIUMBOX_AGENT_NAME: Botium Agent
       BOTIUMBOX_QUEUE_REDISURL: redis://redis:6379
