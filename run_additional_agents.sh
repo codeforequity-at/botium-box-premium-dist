@@ -1,5 +1,10 @@
-BOTIUMBOX_AGENT_NUM=2 docker-compose run -d agent
-BOTIUMBOX_AGENT_NUM=3 docker-compose run -d agent
-BOTIUMBOX_AGENT_NUM=4 docker-compose run -d agent
-BOTIUMBOX_AGENT_NUM=5 docker-compose run -d agent
+#!/bin/bash
+
+source .env
+
+numagents=5
+
+for i in $(seq 2 $numagents); do
+	BOTIUMBOX_AGENT_NUM=$i docker-compose run -d --name ${COMPOSE_PROJECT_NAME}_agent_$i agent
+done
 
