@@ -1,0 +1,129 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: box-server
+  namespace: botium-box
+  labels:
+    name: box-server
+    app: botium-box
+    tier: frontend
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        name: box-server
+        app: botium-box
+        tier: frontend
+    spec:
+      securityContext:
+        runAsUser: 0
+        fsGroup: 0
+      containers:
+        - name: box-server
+          image: botium/botium-box-server:1.8.0
+          ports:
+            - name: box-4000
+              containerPort: 4000
+          volumeMounts:
+          - mountPath: "/app/storage/"
+            name: botium-box-storage
+          env:
+            - name: DEBUG
+              value: botium*
+            - name: TESTSETDIR
+              value: /app/storage/testsets
+            - name: TESTSETDIR_PUBLIC
+              value: /app/storage/testsets
+            - name: RESOURCESDIR
+              value: /app/storage/resources
+            - name: TEMPDIR
+              value: /app/storage/botiumwork
+            - name: LICENSE_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: botium-box-configmap
+                  key: LICENSE_KEY
+            - name: PRISMA_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: botium-box-configmap
+                  key: PRISMA_ENDPOINT
+            - name: BOTIUMBOX_QUEUE_REDISURL
+              valueFrom:
+                configMapKeyRef:
+                  name: botium-box-configmap
+                  key: BOTIUMBOX_QUEUE_REDISURL
+            - name: ZAP_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: botium-box-configmap
+                  key: ZAP_ENDPOINT
+      volumes:
+        - name: botium-box-storage
+          persistentVolumeClaim:
+            claimName: botium-box-storage
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: box-server
+  namespace: botium-box
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 4000
+      protocol: TCP
+  selector:
+    name: box-server
+    app: botium-box
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: box-agent
+  namespace: botium-box
+  labels:
+    name: box-agent
+    app: botium-box
+    tier: frontend
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        name: box-agent
+        app: botium-box
+        tier: frontend
+    spec:
+      containers:
+        - name: box-agent
+          image: botium/botium-box-agent:1.8.0
+          volumeMounts:
+          - mountPath: "/app/storage/"
+            name: botium-box-storage
+          env:
+            - name: BOTIUMBOX_AGENT_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name		
+            - name: DEBUG
+              value: botium*
+            - name: RESOURCESDIR
+              value: /app/storage/resources
+            - name: TEMPDIR
+              value: /app/storage/botiumwork
+            - name: BOTIUMBOX_QUEUE_REDISURL
+              valueFrom:
+                configMapKeyRef:
+                  name: botium-box-configmap
+                  key: BOTIUMBOX_QUEUE_REDISURL
+      volumes:
+        - name: botium-box-storage
+          persistentVolumeClaim:
+            claimName: botium-box-storage		

@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: botium-box-init
+  namespace: botium-box
+spec:
+  template:
+    metadata:
+      name: botium-box-init
+    spec:
+      containers:
+        - name: botium-box-init
+          image: alpine
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - apk add curl unzip && mkdir -p /app/storage/testsets && mkdir -p /app/storage/resources && mkdir -p /app/storage/botiumwork && cd /tmp && curl -L https://github.com/codeforequity-at/botium-box-premium-dist/archive/master.zip -o master.zip && unzip master.zip && cp botium-box-premium-dist-master/resources/* /app/storage/resources && ls -a /app/storage/resources 
+          volumeMounts:
+          - mountPath: "/app/storage"
+            name: storage
+      volumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: botium-box-storage
+      restartPolicy: Never
+  backoffLimit: 0
