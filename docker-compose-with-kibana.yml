@@ -20,7 +20,6 @@ services:
     environment:
       PRISMA_ENDPOINT: http://prisma:4466/box/prod
       BOTIUMBOX_QUEUE_REDISURL: redis://redis:6379
-      BOTIUMBOX_ENABLE_CONNECTORS: fbdirect,webspeech
       ZAP_ENDPOINT: http://zap:8080
       DEBUG: botium*
       TESTSETDIR_PUBLIC: ./testsets
