@@ -18,7 +18,6 @@ services:
     ports:
      - "4000:4000"
     environment:
-      # LICENSE_KEY: # add your license key here or in the resources/license.key file
       PRISMA_ENDPOINT: http://prisma:4466/box/prod
       BOTIUMBOX_QUEUE_REDISURL: redis://redis:6379
       BOTIUMBOX_ENABLE_CONNECTORS: fbdirect,webspeech
@@ -42,7 +41,6 @@ services:
   agent:
     image: botium/botium-box-agent:2.0.0
     environment:
-      BOTIUMBOX_AGENT_NAME: Botium Agent
       BOTIUMBOX_QUEUE_REDISURL: redis://redis:6379
       DEBUG: botium*
       #HTTP_PROXY: https://xxx

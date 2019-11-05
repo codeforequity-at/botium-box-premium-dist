@@ -41,7 +41,6 @@ services:
   agent:
     image: botium/botium-box-agent:2.0.0
     environment:
-      BOTIUMBOX_AGENT_NAME: Botium Agent ${BOTIUMBOX_AGENT_NUM}
       BOTIUMBOX_QUEUE_REDISURL: redis://redis:6379
       DEBUG: botium*
       #HTTP_PROXY: https://xxx
