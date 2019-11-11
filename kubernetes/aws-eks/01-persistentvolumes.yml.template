@@ -18,4 +18,4 @@ spec:
   storageClassName: botium-box-storage-class
   csi:
     driver: efs.csi.aws.com
-    volumeHandle: fs-5e2a8795
+    volumeHandle: {{ my-volume-handle }}

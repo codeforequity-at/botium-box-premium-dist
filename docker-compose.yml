@@ -14,14 +14,12 @@ services:
     networks:
       - botiumBox
   web:
-    image: botium/botium-box-server:${BOX_VERSION}
+    image: botium/botium-box-server:2.0.0
     ports:
      - "4000:4000"
     environment:
-      # LICENSE_KEY: # add your license key here or in the resources/license.key file
       PRISMA_ENDPOINT: http://prisma:4466/box/prod
       BOTIUMBOX_QUEUE_REDISURL: redis://redis:6379
-      BOTIUMBOX_ENABLE_CONNECTORS: fbdirect,webspeech
       ZAP_ENDPOINT: http://zap:8080
       DEBUG: botium*
       TESTSETDIR_PUBLIC: ./testsets
@@ -40,9 +38,8 @@ services:
     networks:
       - botiumBox
   agent:
-    image: botium/botium-box-agent:${BOX_VERSION}
+    image: botium/botium-box-agent:2.0.0
     environment:
-      BOTIUMBOX_AGENT_NAME: Botium Agent ${BOTIUMBOX_AGENT_NUM}
       BOTIUMBOX_QUEUE_REDISURL: redis://redis:6379
       DEBUG: botium*
       #HTTP_PROXY: https://xxx
