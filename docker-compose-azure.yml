@@ -6,7 +6,7 @@ services:
      - "4000:4000"
     environment:
       LICENSE_KEY: # add your license key here
-      PRISMA_ENDPOINT: http://prisma:4466/box/prod
+      PRISMA_ENDPOINT: http://prisma:4466/box/prod13
       BOTIUMBOX_QUEUE_REDISURL: redis://redis:6379
       ZAP_ENDPOINT: http://zap:8080
       DEBUG: botium*
@@ -45,7 +45,7 @@ services:
       - "${WEBAPP_STORAGE_HOME}/resources:/app/agent/resources"
       - "${WEBAPP_STORAGE_HOME}/botiumwork:/app/agent/botiumwork"
   prisma:
-    image: prisma:1.25.4
+    image: prisma:1.34.10
     restart: always
     environment:
       PRISMA_CONFIG: |
