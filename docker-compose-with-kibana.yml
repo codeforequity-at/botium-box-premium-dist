@@ -14,11 +14,11 @@ services:
     networks:
       - botiumBox
   web:
-    image: botium/botium-box-server:2.1.0
+    image: botium/botium-box-server:2.2.0
     ports:
      - "4000:4000"
     environment:
-      PRISMA_ENDPOINT: http://prisma:4466/box/prod
+      PRISMA_ENDPOINT: http://prisma:4466/box/prod13
       BOTIUMBOX_QUEUE_REDISURL: redis://redis:6379
       ZAP_ENDPOINT: http://zap:8080
       DEBUG: botium*
@@ -38,7 +38,7 @@ services:
     networks:
       - botiumBox
   agent:
-    image: botium/botium-box-agent:2.1.0
+    image: botium/botium-box-agent:2.2.0
     environment:
       BOTIUMBOX_QUEUE_REDISURL: redis://redis:6379
       DEBUG: botium*
@@ -57,7 +57,7 @@ services:
     networks:
       - botiumBox
   prisma:
-    image: prismagraphql/prisma:1.25.4
+    image: prismagraphql/prisma:1.34.10
     depends_on:
       - mysql
     restart: always
@@ -114,7 +114,7 @@ services:
     networks:
       - botiumBox
   elasticsearch:
-    image: botium/elasticsearch:2.1.0
+    image: botium/elasticsearch:2.2.0
     restart: always
     volumes:
       - ./elasticsearch/esdata:/usr/share/elasticsearch/data
@@ -126,7 +126,7 @@ services:
       - botiumBox
   logstash:
     restart: always
-    image: botium/logstash:2.1.0
+    image: botium/logstash:2.2.0
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
       DROP_NON_JSON: "false"
@@ -135,7 +135,7 @@ services:
       - botiumBox
   kibana:
     restart: always
-    image: botium/kibana:2.1.0
+    image: botium/kibana:2.2.0
     ports:
       - "5601:5601"
     depends_on:

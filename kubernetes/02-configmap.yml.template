@@ -8,7 +8,7 @@ metadata:
     app: botium-box
 data:
   LICENSE_KEY: {{ my-botium-box-license-key }}
-  PRISMA_ENDPOINT: http://prisma:4466/box/prod
+  PRISMA_ENDPOINT: http://prisma:4466/box/prod13
   BOTIUMBOX_QUEUE_REDISURL: redis://redis:6379
   ZAP_ENDPOINT: http://zap:8080
   PRISMA_CONFIG: |
