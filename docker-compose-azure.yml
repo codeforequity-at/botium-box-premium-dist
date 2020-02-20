@@ -67,7 +67,7 @@ services:
     networks:
       - botiumBox
   zap:
-    image: owasp/zap2docker-stable:2.7.0
+    image: owasp/zap2docker-stable:latest
     command: [
       "zap.sh",
       "-daemon",
