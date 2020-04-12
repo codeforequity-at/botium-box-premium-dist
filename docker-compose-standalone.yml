@@ -14,7 +14,7 @@ services:
     networks:
       - botiumBox
   web:
-    image: botium/botium-box-standalone:dev-BOT-1229
+    image: botium/botium-box-standalone:2.4.0
     ports:
      - "4000:4000"
     environment:
@@ -23,7 +23,7 @@ services:
       ZAP_ENDPOINT: http://zap:8080
       DEBUG: botium*
       TESTSETDIR_PUBLIC: ./testsets
-      BOTIUMBOX_AGENT_COUNT: 5
+      BOTIUMBOX_AGENT_COUNT: 1
     depends_on:
       - redis
       - prisma
