@@ -14,7 +14,7 @@ services:
     networks:
       - botiumBox
   web:
-    image: botium/botium-box-standalone:2.4.0
+    image: botium/botium-box-standalone:2.5.0
     ports:
      - "4000:4000"
     environment:
