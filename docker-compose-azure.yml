@@ -10,7 +10,6 @@ services:
       BOTIUMBOX_QUEUE_REDISURL: redis://redis:6379
       ZAP_ENDPOINT: http://zap:8080
       DEBUG: botium*
-      TESTSETDIR_PUBLIC: ./testsets
       #HTTP_PROXY: https://xxx
       #HTTPS_PROXY: https://xxx
       #NO_PROXY: redis,prisma

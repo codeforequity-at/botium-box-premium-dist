@@ -35,8 +35,6 @@ spec:
               value: botium*
             - name: TESTSETDIR
               value: /app/storage/testsets
-            - name: TESTSETDIR_PUBLIC
-              value: /app/storage/testsets
             - name: RESOURCESDIR
               value: /app/storage/resources
             - name: TEMPDIR
