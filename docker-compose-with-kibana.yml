@@ -37,7 +37,7 @@ services:
     networks:
       - botiumBox
   agent:
-    image: botium/botium-box-agent:2.5.0
+    image: botium/botium-box-agent:2.6.0
     environment:
       BOTIUMBOX_QUEUE_REDISURL: redis://redis:6379
       DEBUG: botium*
@@ -125,7 +125,7 @@ services:
       - botiumBox
   logstash:
     restart: always
-    image: botium/logstash:2.5.0
+    image: botium/logstash:2.6.0
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
       DROP_NON_JSON: "false"
@@ -134,7 +134,7 @@ services:
       - botiumBox
   kibana:
     restart: always
-    image: botium/kibana:2.5.0
+    image: botium/kibana:2.6.0
     ports:
       - "5601:5601"
     depends_on:
