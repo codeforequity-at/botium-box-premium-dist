@@ -19,6 +19,7 @@ services:
      - "4000:4000"
     environment:
       PRISMA_ENDPOINT: http://prisma:4466/box/prod13
+#      COACH_WORKER_ENDPOINT: http://coach/1.0
       BOTIUMBOX_QUEUE_REDISURL: redis://redis:6379
       ZAP_ENDPOINT: http://zap:8080
       DEBUG: botium*
@@ -36,6 +37,13 @@ services:
       - "./botiumwork:/app/server/botiumwork"
     networks:
       - botiumBox
+#  coach:
+#    image: botium/botium-coach-worker:latest
+#    restart: always
+#    environment:
+#      WEB_CONCURRENCY: 1
+#    networks:
+#      - botiumBox
   prisma:
     image: prismagraphql/prisma:1.34.10
     depends_on:
