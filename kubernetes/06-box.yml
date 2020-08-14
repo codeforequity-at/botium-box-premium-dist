@@ -23,7 +23,7 @@ spec:
         fsGroup: 0
       containers:
         - name: box-server
-          image: botium/botium-box-server:2.6.0
+          image: botium/botium-box-server:2.6.1
           ports:
             - name: box-4000
               containerPort: 4000
@@ -103,7 +103,7 @@ spec:
     spec:
       containers:
         - name: box-agent
-          image: botium/botium-box-agent:2.6.0
+          image: botium/botium-box-agent:2.6.1
           volumeMounts:
           - mountPath: "/app/storage/"
             name: botium-box-storage
