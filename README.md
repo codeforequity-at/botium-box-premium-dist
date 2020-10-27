@@ -9,7 +9,7 @@ Botium, the Selenium for Chatbots, Enterprise Edition
 
 ## Pricing & Purchase
 
-See [here](http://www.botium.at/pricing.html)
+See [here](https://www.botium.ai/pricing/)
 
 ## Instructions
 
@@ -21,4 +21,4 @@ See [here](https://botium.atlassian.net/wiki/spaces/BOTIUM/pages/20807681/Botium
 
 ## Help
 
-See [here](http://www.botium.at/support.html)
+See [here](https://www.botium.ai/support/)
