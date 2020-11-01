@@ -18,9 +18,6 @@ spec:
         app: botium-box
         tier: frontend
     spec:
-      securityContext:
-        runAsUser: 0
-        fsGroup: 0
       containers:
         - name: box-server
           image: botium/botium-box-server:2.8.0

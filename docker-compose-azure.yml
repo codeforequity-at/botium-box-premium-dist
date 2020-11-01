@@ -44,7 +44,7 @@ services:
       - "${WEBAPP_STORAGE_HOME}/resources:/app/agent/resources"
       - "${WEBAPP_STORAGE_HOME}/botiumwork:/app/agent/botiumwork"
   prisma:
-    image: prisma:1.34.10
+    image: botium/prisma:2.8.0
     restart: always
     environment:
       PRISMA_CONFIG: |
