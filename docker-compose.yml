@@ -14,7 +14,7 @@ services:
     networks:
       - botiumBox
   web:
-    image: botium/botium-box-server:2.8.0
+    image: botium/botium-box-server:2.8.1
     ports:
      - "4000:4000"
     environment:
@@ -45,7 +45,7 @@ services:
     networks:
       - botiumBox
   agent:
-    image: botium/botium-box-agent:2.8.0
+    image: botium/botium-box-agent:2.8.1
     environment:
       BOTIUMBOX_QUEUE_REDISURL: redis://redis:6379
       DEBUG: botium*
@@ -64,7 +64,7 @@ services:
     networks:
       - botiumBox
   prisma:
-    image: botium/prisma:2.8.0
+    image: botium/prisma:2.8.1
     depends_on:
       - mysql
     restart: always
