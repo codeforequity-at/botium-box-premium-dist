@@ -7,6 +7,7 @@ services:
       - ./certs/cert.crt:/etc/nginx/cert.crt
       - ./certs/cert.key:/etc/nginx/cert.key
     ports:
+      - 80:80
       - 443:443
     depends_on:
       - web
@@ -23,6 +24,7 @@ services:
       BOTIUMBOX_QUEUE_REDISURL: redis://redis:6379
       ZAP_ENDPOINT: http://zap:8080
       DEBUG: botium*
+      BOTIUMBOX_SCANFORTESTSETS:
       #HTTP_PROXY: https://xxx
       #HTTPS_PROXY: https://xxx
       #NO_PROXY: redis,prisma

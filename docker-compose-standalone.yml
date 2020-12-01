@@ -24,6 +24,7 @@ services:
       ZAP_ENDPOINT: http://zap:8080
       DEBUG: botium*
       BOTIUMBOX_AGENT_COUNT: 1
+      BOTIUMBOX_SCANFORTESTSETS:
     depends_on:
       - redis
       - prisma
