@@ -20,7 +20,7 @@ services:
      - "4000:4000"
     environment:
       PRISMA_ENDPOINT: http://prisma:4466/box/prod13
-      #COACH_WORKER_ENDPOINT: http://coach/1.0
+      #COACH_WORKER_ENDPOINT: http://coach:8080/1.0
       BOTIUMBOX_QUEUE_REDISURL: redis://redis:6379
       ZAP_ENDPOINT: http://zap:8080
       DEBUG: botium*
