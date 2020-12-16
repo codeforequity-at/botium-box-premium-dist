@@ -23,17 +23,6 @@ spec:
         app: botium-box
         tier: frontend
     spec:
-      initContainers:
-        - name: box-server-chmod-er
-          image: busybox:latest
-          command:
-          - /bin/chown
-          - -R
-          - "1000:1000"
-          - /app/storage
-          volumeMounts:
-          - mountPath: "/app/storage"
-            name: botium-box-storage
       containers:
         - name: box-server
           image: botium/botium-box-server:2.8.2
@@ -44,6 +33,8 @@ spec:
           - mountPath: "/app/storage/"
             name: botium-box-storage
           env:
+            - name: HOME
+              value: /tmp
             - name: DEBUG
               value: botium*
             - name: TESTSETDIR
@@ -114,17 +105,6 @@ spec:
         app: botium-box
         tier: frontend
     spec:
-      initContainers:
-        - name: box-agent-chmod-er
-          image: busybox:latest
-          command:
-          - /bin/chown
-          - -R
-          - "1000:1000"
-          - /app/storage
-          volumeMounts:
-          - mountPath: "/app/storage"
-            name: botium-box-storage
       containers:
         - name: box-agent
           image: botium/botium-box-agent:2.8.2

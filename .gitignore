@@ -2,3 +2,4 @@ mysql
 resources/license.key
 kubernetes/02-configmap.yml
 kubernetes/aws-eks/01-persistentvolumes.yml
+openshift/02-configmap.yml
