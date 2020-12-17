@@ -1,0 +1,93 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: coach-pv-claim
+  namespace: botium-box
+  labels:
+    name: coach-pv-claim
+    app: botium-box
+    tier: backend
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coach
+  namespace: botium-box
+  labels:
+    name: coach
+    app: botium-box
+    tier: backend
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      name: coach
+      app: botium-box
+      tier: backend
+  template:
+    metadata:
+      labels:
+        name: coach
+        app: botium-box
+        tier: backend
+    spec:
+      initContainers:
+        - name: coach-extract-data
+          image: botium/botium-coach-worker:latest
+          command: ['sh', '-c', 'cp -R /app/tfhub_modules /app/nltk_data /data/']
+          volumeMounts:
+          - name: coach-persistent-storage
+            mountPath: /data/tfhub_modules
+            subPath: tfhub_modules
+          - name: coach-persistent-storage
+            mountPath: /data/nltk_data
+            subPath: nltk_data
+      containers:
+      - name: coach
+        image: botium/botium-coach-worker:latest
+        ports:
+          - name: coach-8080
+            containerPort: 8080
+        env:
+          - name: GUNICORN_CMD_ARGS
+            value: -b 0.0.0.0:8080 --timeout 1800 --worker-class gthread --worker-tmp-dir /data/worker
+          - name: TFHUB_CACHE_DIR
+            value: /data/tfhub_modules
+          - name: NLTK_DATA
+            value: /data/nltk_data
+        volumeMounts:
+          - name: coach-persistent-storage
+            mountPath: /data/worker
+            subPath: worker
+          - name: coach-persistent-storage
+            mountPath: /data/tfhub_modules
+            subPath: tfhub_modules
+          - name: coach-persistent-storage
+            mountPath: /data/nltk_data
+            subPath: nltk_data
+      volumes:
+      - name: coach-persistent-storage
+        persistentVolumeClaim:
+          claimName: coach-pv-claim            
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: coach
+  namespace: botium-box
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    name: coach
+    app: botium-box

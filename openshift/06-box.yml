@@ -63,6 +63,11 @@ spec:
                 configMapKeyRef:
                   name: botium-box-configmap
                   key: ZAP_ENDPOINT
+            - name: COACH_WORKER_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: botium-box-configmap
+                  key: COACH_WORKER_ENDPOINT
       volumes:
         - name: botium-box-storage
           persistentVolumeClaim:
