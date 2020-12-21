@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: prisma
-          image: botium/prisma:2.8.2
+          image: botium/prisma:2.8.3
           ports:
             - name: prisma-4466
               containerPort: 4466
