@@ -13,11 +13,11 @@ See [here](https://www.botium.ai/pricing/)
 
 ## Instructions
 
-See [here](https://botium.atlassian.net/wiki/spaces/BOTIUM/pages/360493/Botium+Box+Enterprise)
+See [here](https://wiki.botiumbox.com/)
 
 ## Release Notes
 
-See [here](https://botium.atlassian.net/wiki/spaces/BOTIUM/pages/20807681/Botium+Box+Release+Notes)
+See [here](https://wiki.botiumbox.com/background/botium-box-release-notes/)
 
 ## Help
 
