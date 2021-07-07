@@ -83,6 +83,7 @@ services:
             user: root
             password: prisma
             migrations: true
+            rawAccess: true
     networks:
       - botiumBox
   mysql:

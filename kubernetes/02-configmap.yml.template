@@ -21,4 +21,5 @@ data:
         user: {{ my-mysql-user-name }}
         password: {{ my-mysql-password }}
         migrations: true
+        rawAccess: true
         ssl: true

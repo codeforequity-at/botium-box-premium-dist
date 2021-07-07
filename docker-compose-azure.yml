@@ -58,6 +58,7 @@ services:
             user: root
             password: prisma
             migrations: true
+            rawAccess: true
             ssl: true
     networks:
       - botiumBox

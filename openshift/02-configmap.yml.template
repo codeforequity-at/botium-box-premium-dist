@@ -22,4 +22,5 @@ data:
         user: root
         password: password
         migrations: true
+        rawAccess: true
         ssl: false
