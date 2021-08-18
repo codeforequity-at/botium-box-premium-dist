@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: box-server
-          image: botium/botium-box-server:2.8.10
+          image: botium/botium-box-server:2.9.0
           ports:
             - name: box-4000
               containerPort: 4000
@@ -112,7 +112,7 @@ spec:
     spec:
       containers:
         - name: box-agent
-          image: botium/botium-box-agent:2.8.10
+          image: botium/botium-box-agent:2.9.0
           volumeMounts:
           - mountPath: "/app/storage/"
             name: botium-box-storage
