@@ -14,7 +14,7 @@ services:
     networks:
       - botiumBox
   web:
-    image: botium/botium-box-standalone:2.9.0
+    image: botium/botium-box-standalone:2.10.2
     ports:
      - "4000:4000"
     environment:
@@ -48,7 +48,7 @@ services:
 #    networks:
 #      - botiumBox
   prisma:
-    image: botium/prisma:2.9.0
+    image: botium/prisma:2.10.2
     depends_on:
       - mysql
     restart: always
