@@ -14,11 +14,11 @@ services:
     networks:
       - botiumBox
   web:
-    image: botium/botium-box-standalone:2.10.2
+    image: botium/botium-box-standalone:2.11.0
     ports:
      - "4000:4000"
     environment:
-      PRISMA_ENDPOINT: http://prisma:4466/box/prod13
+      DATABASE_URL: "mysql://root:prisma@mysql:3306/box@prod2"
       #COACH_WORKER_ENDPOINT: http://coach:8080/1.0
       #SPEECH_PROCESSING_ENDPOINT: https://speech.botiumbox.com
       #SPEECH_PROCESSING_APIKEY:
@@ -29,7 +29,7 @@ services:
       BOTIUMBOX_SCANFORTESTSETS:
     depends_on:
       - redis
-      - prisma
+      - mysql
     restart: always
     volumes:
       - "./testsets:/app/agent/testsets"
@@ -47,25 +47,6 @@ services:
 #      WEB_CONCURRENCY: 1
 #    networks:
 #      - botiumBox
-  prisma:
-    image: botium/prisma:2.10.2
-    depends_on:
-      - mysql
-    restart: always
-    environment:
-      PRISMA_CONFIG: |
-        port: 4466
-        databases:
-          default:
-            connector: mysql
-            host: mysql
-            port: 3306
-            user: root
-            password: prisma
-            migrations: true
-            rawAccess: true
-    networks:
-      - botiumBox
   mysql:
     image: mysql:5.7
     restart: always
