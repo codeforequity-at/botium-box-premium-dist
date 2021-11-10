@@ -8,18 +8,6 @@ metadata:
     app: botium-box
 data:
   LICENSE_KEY: {{ my-botium-box-license-key }}
-  PRISMA_ENDPOINT: http://prisma:4466/box/prod13
+  DATABASE_URL: mysql://root:password@mysql:3306/box@prod13
   BOTIUMBOX_QUEUE_REDISURL: redis://redis:6379
   ZAP_ENDPOINT: http://zap:8080
-  PRISMA_CONFIG: |
-    port: 4466
-    databases:
-      default:
-        connector: mysql
-        host: {{ my-mysql-host-name }}
-        port: 3306
-        user: {{ my-mysql-user-name }}
-        password: {{ my-mysql-password }}
-        migrations: true
-        rawAccess: true
-        ssl: true

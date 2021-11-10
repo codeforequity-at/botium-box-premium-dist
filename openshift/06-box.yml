@@ -48,11 +48,11 @@ spec:
                 configMapKeyRef:
                   name: botium-box-configmap
                   key: LICENSE_KEY
-            - name: PRISMA_ENDPOINT
+            - name: DATABASE_URL
               valueFrom:
                 configMapKeyRef:
                   name: botium-box-configmap
-                  key: PRISMA_ENDPOINT
+                  key: DATABASE_URL
             - name: BOTIUMBOX_QUEUE_REDISURL
               valueFrom:
                 configMapKeyRef:

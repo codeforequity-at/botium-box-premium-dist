@@ -6,18 +6,17 @@ services:
      - "4000:4000"
     environment:
       LICENSE_KEY: # add your license key here
-      PRISMA_ENDPOINT: http://prisma:4466/box/prod13
+      DATABASE_URL: mysql://root:prisma@mysql:3306/box@prod13
       BOTIUMBOX_QUEUE_REDISURL: redis://redis:6379
       ZAP_ENDPOINT: http://zap:8080
       DEBUG: botium*
       BOTIUMBOX_SCANFORTESTSETS:
       #HTTP_PROXY: https://xxx
       #HTTPS_PROXY: https://xxx
-      #NO_PROXY: redis,prisma
+      #NO_PROXY: redis
       #NODE_TLS_REJECT_UNAUTHORIZED: 0
     depends_on:
       - redis
-      - prisma
     restart: always
     networks:
       - botiumBox
@@ -32,7 +31,7 @@ services:
       DEBUG: botium*
       #HTTP_PROXY: https://xxx
       #HTTPS_PROXY: https://xxx
-      #NO_PROXY: redis,prisma
+      #NO_PROXY: redis
       #NODE_TLS_REJECT_UNAUTHORIZED: 0
     depends_on:
       - web
@@ -44,24 +43,6 @@ services:
       - "${WEBAPP_STORAGE_HOME}/testsets:/app/agent/testsets"
       - "${WEBAPP_STORAGE_HOME}/resources:/app/agent/resources"
       - "${WEBAPP_STORAGE_HOME}/botiumwork:/app/agent/botiumwork"
-  prisma:
-    image: botium/prisma:2.11.0
-    restart: always
-    environment:
-      PRISMA_CONFIG: |
-        port: 4466
-        databases:
-          default:
-            connector: mysql
-            host: mysql
-            port: 3306
-            user: root
-            password: prisma
-            migrations: true
-            rawAccess: true
-            ssl: true
-    networks:
-      - botiumBox
   redis:
     image: redis:alpine
     restart: always
