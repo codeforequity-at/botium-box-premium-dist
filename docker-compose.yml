@@ -45,7 +45,11 @@ services:
 #    image: botium/botium-coach-worker:latest
 #    restart: always
 #    environment:
+#      COACH_MAX_UTTERANCES_FOR_EMBEDDINGS: 500
 #      WEB_CONCURRENCY: 1
+#      COACH_MAX_CALCULATIONS_PER_WORKER: 3
+#      COACH_PARALLEL_WORKERS: 1
+#      COACH_HOSTNAME: coach
 #    networks:
 #      - botiumBox
   agent:

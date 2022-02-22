@@ -63,6 +63,16 @@ spec:
             value: /data/tfhub_modules
           - name: NLTK_DATA
             value: /data/nltk_data
+          - name: WEB_CONCURRENCY
+            value: 1
+          - name: COACH_MAX_UTTERANCES_FOR_EMBEDDINGS
+            value: 500
+          - name: COACH_MAX_CALCULATIONS_PER_WORKER
+            value: 3
+          - name: COACH_PARALLEL_WORKERS
+            value: 1
+          - name: COACH_HOSTNAME
+            value: coach
         volumeMounts:
           - name: coach-persistent-storage
             mountPath: /data/worker
