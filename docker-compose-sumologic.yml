@@ -147,6 +147,5 @@ services:
     volumes:
       - "./testsets:/data/testsets"
       - "./resources:/data/resources"
-      - "./botiumwork:/data/botiumwork"
 networks:
   botiumBox:
