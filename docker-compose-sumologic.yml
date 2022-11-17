@@ -7,6 +7,7 @@ services:
       - ./certs/cert.crt:/etc/nginx/cert.crt
       - ./certs/cert.key:/etc/nginx/cert.key
     ports:
+      - 80:80
       - 443:443
     depends_on:
       - web
@@ -19,6 +20,9 @@ services:
      - "4000:4000"
     environment:
       DATABASE_URL: mysql://root:prisma@mysql:3306/box@prod13
+      #COACH_WORKER_ENDPOINT: http://coach:8080/1.0
+      #SPEECH_PROCESSING_ENDPOINT: https://speech.botiumbox.com
+      #SPEECH_PROCESSING_APIKEY:
       BOTIUMBOX_QUEUE_REDISURL: redis://redis:6379
       ZAP_ENDPOINT: http://zap:8080
       DEBUG: botium*
@@ -31,12 +35,27 @@ services:
       - redis
       - mysql
     restart: always
+    logging:
+      driver: sumologic
+      options:
+        sumo-url: ${SUMOLOGIC_COLLECTOR_URL}
     volumes:
       - "./testsets:/app/server/testsets"
       - "./resources:/app/server/resources"
       - "./botiumwork:/app/server/botiumwork"
     networks:
       - botiumBox
+#  coach:
+#    image: botium/botium-coach-worker:latest
+#    restart: always
+#    environment:
+#      COACH_MAX_UTTERANCES_FOR_EMBEDDINGS: 500
+#      WEB_CONCURRENCY: 1
+#      COACH_MAX_CALCULATIONS_PER_WORKER: 3
+#      COACH_PARALLEL_WORKERS: 1
+#      COACH_HOSTNAME: coach
+#    networks:
+#      - botiumBox
   agent:
     image: botium/botium-box-agent:2.13.3
     environment:
@@ -50,6 +69,10 @@ services:
       - web
       - redis
     restart: always
+    logging:
+      driver: sumologic
+      options:
+        sumo-url: ${SUMOLOGIC_COLLECTOR_URL}
     volumes:
       - "./testsets:/app/agent/testsets"
       - "./resources:/app/agent/resources"
@@ -95,50 +118,34 @@ services:
     ]
     networks:
       - botiumBox
-  elasticsearch:
-    image: botium/elasticsearch:2.13.3
-    restart: always
-    volumes:
-      - ./elasticsearch/esdata:/usr/share/elasticsearch/data
-    environment:
-      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-      ELASTIC_PASSWORD: changeme
-      LOGSPOUT: "ignore"
-    networks:
-      - botiumBox
-  logstash:
-    restart: always
-    image: botium/logstash:2.13.3
-    environment:
-      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
-      DROP_NON_JSON: "false"
-      STDOUT: "false"
-    networks:
-      - botiumBox
-  kibana:
-    restart: always
-    image: botium/kibana:2.13.3
-    ports:
-      - "5601:5601"
+  mysql-backup:
+    image: schickling/mysql-backup-s3
     depends_on:
-      - elasticsearch
-    environment:
-      LOGSPOUT: "ignore"
-    networks:
-      - botiumBox
-  logspout:
+      - mysql
     restart: always
-    image: gliderlabs/logspout:v3
-    command: 'syslog://logstash:5000'
     links:
-      - logstash
+      - mysql:db
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: prisma
+      S3_ACCESS_KEY_ID: ${S3_ACCESS_KEY_ID}
+      S3_SECRET_ACCESS_KEY: ${S3_SECRET_ACCESS_KEY}
+      S3_BUCKET: ${S3_BUCKET}
+      S3_PREFIX: mysql_backup
+      S3_REGION: ${S3_REGION}
+      MULTI_FILES: yes
+      SCHEDULE: ${BACKUP_SCHEDULE}
+  files-backup:
+    image: murliwatz/docker-backup-to-s3
+    restart: always
+    environment:
+      ACCESS_KEY: ${S3_ACCESS_KEY_ID}
+      SECRET_KEY: ${S3_SECRET_ACCESS_KEY}
+      S3_PATH: "s3://${S3_BUCKET}/files_backup/"
+      CRON_SCHEDULE: ${BACKUP_SCHEDULE}
     volumes:
-      - '/var/run/docker.sock:/tmp/docker.sock'
-    depends_on:
-      - elasticsearch
-      - logstash
-      - kibana
-    networks:
-      - botiumBox
+      - "./testsets:/data/testsets"
+      - "./resources:/data/resources"
 networks:
   botiumBox:

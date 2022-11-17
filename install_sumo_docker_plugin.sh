@@ -1,0 +1,1 @@
+docker plugin install sumologic/docker-logging-driver:1.0.6 --alias sumologic --grant-all-permissions
