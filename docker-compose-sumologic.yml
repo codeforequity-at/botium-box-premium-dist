@@ -27,6 +27,7 @@ services:
       ZAP_ENDPOINT: http://zap:8080
       DEBUG: botium*
       BOTIUMBOX_SCANFORTESTSETS:
+      BOTIUMBOX_LOG_JSON: 1
       #HTTP_PROXY: https://xxx
       #HTTPS_PROXY: https://xxx
       #NO_PROXY: redis
@@ -61,6 +62,7 @@ services:
     environment:
       BOTIUMBOX_QUEUE_REDISURL: redis://redis:6379
       DEBUG: botium*
+      BOTIUMBOX_LOG_JSON: 1
       #HTTP_PROXY: https://xxx
       #HTTPS_PROXY: https://xxx
       #NO_PROXY: redis
